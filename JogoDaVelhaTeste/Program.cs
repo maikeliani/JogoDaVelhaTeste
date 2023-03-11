@@ -35,10 +35,7 @@ internal class Program
             {
                 contador++;
             }
-            else
-            {
-                Console.WriteLine("Posição ja esta ocupada.");
-            }
+            
             if ((VerificaLinha(mat) || VerificaColuna(mat) || VerificaDiagonalPrincipal(mat) ||
                 verificaDiagonalSegundaria(mat)) &&  (contador >= 5))
             {
@@ -49,25 +46,25 @@ internal class Program
 
         } while ((contador <= 8) && fimPartida == false);
 
-        MostrarTabuleiro(mat); // ultima alteração
+        MostrarTabuleiro(mat); 
         Console.WriteLine();
         Console.WriteLine("\t   FIM DO JOGO!!!");
 
         // VERIFICAÇÕES PARA FINALIZAR MENSAGEM PERSONALIZADA NO FIM DA PARTIDA
         if(contador < 9)
         {
-            Console.WriteLine("Contador é: " + contador);  // apagar depois
+             
             Console.WriteLine("\t   JOGADOR " + nomeAtual + " VENCEU!");
         }
         else if( (contador == 9) && (fimPartida == true ))
         {
-            Console.WriteLine("Contador é: " + contador); // apagar depois
+            
             Console.WriteLine("\t   JOGADOR " + nomeAtual + " VENCEU!");
             
         }
         else
         {
-            Console.WriteLine("Contador é: " + contador);// apagar depois
+           
             Console.WriteLine("\t   DEU VELHA!!!");
         }
         
@@ -75,11 +72,20 @@ internal class Program
 
 
         void EscolhePosicao()
-        {
+        {   string aux;
             Console.WriteLine();
-            Console.Write("\tInforme a posição desejada: ");
-            posicao = int.Parse(Console.ReadLine());
-            //bool posicaoValida = false;
+            Console.Write("\tInforme a posição desejada: ");            
+            aux = Console.ReadLine();
+            if(!int.TryParse(aux,out posicao)) // trata entradas de caracteres inválidos
+            {
+                Console.WriteLine("\tPosição inválida!");
+                Console.Clear();
+                MostrarTabuleiro(mat);
+                EscolhePosicao();
+            }
+             
+            
+            
 
 
             switch (posicao)
@@ -149,12 +155,12 @@ internal class Program
                         break;
                     }
             } 
-
+                // trata erros de entrada de valores
             if( (posicao <= 0) || (posicao > 9) )
             {
                 EscolhePosicao();
             }
-
+            
         }
 
 
@@ -165,7 +171,7 @@ internal class Program
             if ((aux[lin, col] == jogador1) || (aux[lin, col] == jogador2))
             {
                 Console.WriteLine("\tEssa posição já foi utilizada! Escolha outra");
-                Console.ReadLine(); // testar erro na SEGUNDA REPETICAO
+                Console.ReadKey();
                 return false;
             }
             else if (aux[lin, col] == '-')
@@ -200,7 +206,7 @@ internal class Program
             Console.Write("Informe o nome do 2º jogador: ");
             nome2 = Console.ReadLine().ToUpper();
 
-            //int contador = 0;
+            
             for (int linha = 0; linha < aux.GetLength(0); linha++)
             {
                 for (int coluna = 0; coluna < aux.GetLength(1); coluna++)
