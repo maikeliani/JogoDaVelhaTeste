@@ -39,8 +39,8 @@ internal class Program
             {
                 Console.WriteLine("Posição ja esta ocupada.");
             }
-            if (VerificaLinha(mat) || VerificaColuna(mat) || VerificaDiagonalPrincipal(mat) ||
-                verificaDiagonalSegundaria(mat))
+            if ((VerificaLinha(mat) || VerificaColuna(mat) || VerificaDiagonalPrincipal(mat) ||
+                verificaDiagonalSegundaria(mat)) &&  (contador >= 5))
             {
                 fimPartida = true;
                 Console.WriteLine(fimPartida);
@@ -145,12 +145,15 @@ internal class Program
                 default:
                     {
                         Console.WriteLine("\tEssa posição não existe, escolha novamente!");
-                        Console.Read();                       
+                        Console.ReadKey();                       
                         break;
                     }
             } 
 
-
+            if( (posicao <= 0) || (posicao > 9) )
+            {
+                EscolhePosicao();
+            }
 
         }
 
@@ -159,7 +162,7 @@ internal class Program
 
         bool RealizaJogada(char[,] aux, int lin, int col)
         {
-            if ((aux[lin, col] == jogador1) || (mat[0, 0] == jogador2))
+            if ((aux[lin, col] == jogador1) || (aux[lin, col] == jogador2))
             {
                 Console.WriteLine("\tEssa posição já foi utilizada! Escolha outra");
                 Console.ReadLine(); // testar erro na SEGUNDA REPETICAO
@@ -172,17 +175,19 @@ internal class Program
                 {
                     aux[lin, col] = jogador1;
                     jogadorAtual = true;
-                    nomeAtual = nome1; 
+                    nomeAtual = nome1;
+                    return true;
                 }
                 else
                 {
                     aux[lin, col] = jogador2;
                     jogadorAtual = false;
                     nomeAtual = nome2;
+                    return true;
                 }
-                return true;
+                
             }
-            return true;
+            return false;
         }
 
 
@@ -195,7 +200,7 @@ internal class Program
             Console.Write("Informe o nome do 2º jogador: ");
             nome2 = Console.ReadLine().ToUpper();
 
-            int contador = 0;
+            //int contador = 0;
             for (int linha = 0; linha < aux.GetLength(0); linha++)
             {
                 for (int coluna = 0; coluna < aux.GetLength(1); coluna++)
