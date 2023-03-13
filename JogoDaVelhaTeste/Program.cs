@@ -78,7 +78,8 @@ internal class Program
             aux = Console.ReadLine();
             if(!int.TryParse(aux,out posicao)) // trata entradas de caracteres inválidos
             {
-                Console.WriteLine("\tPosição inválida!");
+                Console.WriteLine("\tDigite apenas números de 1 a 9!");
+                Console.ReadKey(); 
                 Console.Clear();
                 MostrarTabuleiro(mat);
                 EscolhePosicao();
